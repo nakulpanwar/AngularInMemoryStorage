@@ -1,0 +1,1 @@
+var managingDataApp = angular.module("managingDataApp", ['ngRoute', 'ngAnimate', 'angular-loading-bar']);
