@@ -1,1 +1,35 @@
-my_data
+<div class="section">
+    <div class="row">
+        <div class="col s4"><span style="font-size: 36px;">My Data</span></div>
+        <div class="input-field col s4 right"><input type="number" ng-model="pageSize" class="input-field" placeholder="Page size" min="5" max="1000" /></div>
+    </div>
+    <div class="row">
+        <div class="col s4"><input type="text" placeholder="Search by name" ng-model="q" class="input-field" /></div>
+        <div class="col s4 right"><button class="waves-effect waves-light btn indigo right" ng-json-export-excel data="userData" report-fields="{firstName: 'First name', middleName: 'Middle name', lastName: 'Last name'}" separator=";">Export</button></div>
+    </div>
+    <div class="section">
+        <table class="striped centered responsive-table">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>First name</th>
+                    <th>Middle name</th>
+                    <th>Last name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="item in userData | filter:q | itemsPerPage: pageSize track by $index" current-page="currentPage">
+                    <td>{{ $index + currentPage * pageSize - (pageSize-1) }}</td>
+                    <td>{{item.firstName}}</td>
+                    <td>{{item.middleName}}</td>
+                    <td>{{item.lastName}}</td>
+                    <td><button class="waves-effect waves-light btn indigo" ng-click="remove(item)">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="section center-align">
+            <dir-pagination-controls boundary-links="true" template-url="js/third-party/dirPagination.tpl.html"></dir-pagination-controls>
+        </div>
+    </div>
+</div>

@@ -5,11 +5,8 @@
     function configureRoutes($routeProvider) {
         
         $routeProvider.when('/', {
-            templateUrl : 'partials/define_data.html',
-            controller : 'DefineDataCtrl'
-        }).when('/define_data', {                               //Basics
-            templateUrl : 'partials/define_data.html',
-            controller : 'DefineDataCtrl'
+            templateUrl : 'partials/my_data.html',
+            controller : 'MyDataCtrl'
         }).when('/add_more_to_data', {
             templateUrl : 'partials/add_more_to_data.html',
             controller : 'AddMoreCtrl'

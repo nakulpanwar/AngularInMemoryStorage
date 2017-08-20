@@ -1,1 +1,24 @@
-add_more_to_data
+<div class="section">
+    <h3>Feed some data:</h3>
+    <br>
+    <div class="row">
+        <form id="define-data-form" class="col s12">
+            <div class="row">
+                <div class="input-field col s4">
+                    <input type="text" ng-model="inputs.firstName" class="input-field" placeholder="Your first name"/>
+                </div>
+                <div class="input-field col s4">
+                    <input type="text" ng-model="inputs.middleName" class="input-field" placeholder="Your middle name"/>
+                </div>
+                <div class="input-field col s4">
+                    <input type="text" ng-model="inputs.lastName" class="input-field" placeholder="Your last name"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="center-align">
+                    <a class="waves-effect waves-light btn indigo" ng-click="save()">Save</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

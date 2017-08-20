@@ -1,35 +1,28 @@
-(function () {
-    angular.module("managingDataApp")
-            .controller('HeaderCtrl', HeaderCtrl);
-
-    HeaderCtrl.$Inject = ['$rootScope'];
-
-    function HeaderCtrl($rootScope) {
-        console.log("HeaderCtrl");
-    }
-})();
-
-// Define data controller
-(function () {
-    angular.module("managingDataApp")
-            .controller('DefineDataCtrl', DefineDataCtrl);
-
-    DefineDataCtrl.$Inject = ['$rootScope'];
-
-    function DefineDataCtrl($rootScope) {
-        console.log("DefineDataCtrl");
-    }
-})();
-
 // Add more controller
 (function () {
     angular.module("managingDataApp")
             .controller('AddMoreCtrl', AddMoreCtrl);
 
-    AddMoreCtrl.$Inject = ['$rootScope'];
+    AddMoreCtrl.$Inject = ['$rootScope', '$scope'];
 
-    function AddMoreCtrl($rootScope) {
-        console.log("AddMoreCtrl");
+    function AddMoreCtrl($rootScope, $scope) {
+        $scope.inputs = {
+            firstName : "",
+            middleName : "",
+            lastName : ""
+        }
+        
+        $scope.save = function () {
+            $rootScope.userData.push($scope.inputs);
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem("inMemoryStore", JSON.stringify($rootScope.userData));
+                var data = localStorage.getItem("inMemoryStore");
+                $rootScope.userData = JSON.parse(data);
+            } else {
+                console.log("Sorry! no local storage support");
+            }
+        }
+        
     }
 })();
 
@@ -38,9 +31,40 @@
     angular.module("managingDataApp")
             .controller('MyDataCtrl', MyDataCtrl);
 
-    MyDataCtrl.$Inject = ['$rootScope'];
+    MyDataCtrl.$Inject = ['$rootScope', '$scope'];
 
-    function MyDataCtrl($rootScope) {
-        console.log("MyDataCtrl");
+    function MyDataCtrl($rootScope, $scope) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 5;
+        
+        $scope.remove = function (item) {
+            for(var l=0; l < $rootScope.userData.length; l++) {
+                if($rootScope.userData[l] == item) {
+                    var index = $rootScope.userData.indexOf($rootScope.userData[l]);
+                    $rootScope.userData.splice(index, 1);
+                    if (typeof (Storage) !== "undefined") {
+                        localStorage.setItem("inMemoryStore", JSON.stringify($rootScope.userData));
+                        var data = localStorage.getItem("inMemoryStore");
+                        $rootScope.userData = JSON.parse(data);
+                    } else {
+                        console.log("Sorry! no local storage support");
+                    }
+                    $scope.getMyData();
+                }
+            }
+        }
+        
+        $scope.getMyData = function () {
+            if (typeof (Storage) !== "undefined") {
+                var data = localStorage.getItem("inMemoryStore");
+                $rootScope.userData = JSON.parse(data);
+                $scope.totalItems = $rootScope.userData.length;
+                $scope.items = $rootScope.userData;
+            } else {
+                console.log("Sorry! no local storage support");
+            }
+        }
+        
+        $scope.getMyData();
     }
 })();
